@@ -1,6 +1,6 @@
  .u-section-1 {
   filter: none;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("images/TOP.png");
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('images/TOP.png');
   background-position: 50% 50%, 50% 50%;
   background-repeat: no-repeat;
   background-size: cover, cover;
