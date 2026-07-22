@@ -184,11 +184,11 @@
 }
 
 .u-section-3 .u-sheet-1 {
-  min-height: 159px;
+  min-height: 160px;
 }
 
 .u-section-3 .u-list-1 {
-  width: 1116px;
+  width: 896px;
   margin: 21px auto;
 }
 
@@ -264,11 +264,9 @@
 
   .u-section-3 .u-list-1 {
     margin-top: 324px;
-    width: 940px;
   }
 
   .u-section-3 .u-repeater-1 {
-    min-height: 99px;
     grid-gap: 0px;
   }
 
@@ -279,7 +277,6 @@
 
   .u-section-3 .u-text-2 {
     width: auto;
-    margin-right: 0;
     margin-left: 70px;
   }
 
@@ -290,7 +287,6 @@
 
   .u-section-3 .u-text-4 {
     width: auto;
-    margin-right: 0;
     margin-left: 70px;
   }
 }
@@ -319,6 +315,7 @@
   }
 
   .u-section-3 .u-text-2 {
+    margin-right: 0;
     margin-left: 0;
   }
 
@@ -328,6 +325,7 @@
   }
 
   .u-section-3 .u-text-4 {
+    margin-right: 0;
     margin-left: 0;
   }
 }
