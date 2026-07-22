@@ -184,7 +184,7 @@
 }
 
 .u-section-3 .u-sheet-1 {
-  min-height: 160px;
+  min-height: 196px;
 }
 
 .u-section-3 .u-list-1 {
@@ -194,7 +194,7 @@
 
 .u-section-3 .u-repeater-1 {
   grid-template-columns: repeat(2, 50%);
-  min-height: 118px;
+  min-height: 154px;
   --gap: 0px;
   grid-auto-columns: 50%;
 }
@@ -208,7 +208,7 @@
 }
 
 .u-section-3 .u-container-layout-1 {
-  padding: 10px 10px 10px 0;
+  padding: 10px 10px 0 0;
 }
 
 .u-section-3 .u-icon-1 {
@@ -221,11 +221,17 @@
 .u-section-3 .u-text-1 {
   font-weight: 700;
   font-size: 1.25rem;
-  margin: -33px 0 0 60px;
+  margin: -24px 0 0 60px;
 }
 
 .u-section-3 .u-text-2 {
-  margin: 16px 25px 0 35px;
+  margin: 9px 25px 0 35px;
+}
+
+.u-section-3 .u-text-3 {
+  margin-left: 35px;
+  margin-right: 25px;
+  margin-bottom: 0;
 }
 
 .u-section-3 .u-list-item-2 {
@@ -247,14 +253,30 @@
   padding: 0;
 }
 
-.u-section-3 .u-text-3 {
+.u-section-3 .u-text-4 {
   font-weight: 700;
   font-size: 1.25rem;
-  margin: -33px 0 0 60px;
+  margin: -24px 0 0 60px;
 }
 
-.u-section-3 .u-text-4 {
-  margin: 16px 25px 0 35px;
+.u-section-3 .u-text-5 {
+  margin: 9px 25px 0 35px;
+}
+
+.u-section-3 .u-btn-1 {
+  background-image: none;
+  padding: 0;
+}
+
+.u-section-3 .u-text-6 {
+  margin-left: 35px;
+  margin-right: 25px;
+  margin-bottom: 0;
+}
+
+.u-section-3 .u-btn-2 {
+  background-image: none;
+  padding: 0;
 }
 
 @media (max-width: 1199px) {
@@ -280,12 +302,12 @@
     margin-left: 70px;
   }
 
-  .u-section-3 .u-text-3 {
+  .u-section-3 .u-text-4 {
     width: auto;
     margin-left: 70px;
   }
 
-  .u-section-3 .u-text-4 {
+  .u-section-3 .u-text-5 {
     width: auto;
     margin-left: 70px;
   }
@@ -320,13 +342,23 @@
   }
 
   .u-section-3 .u-text-3 {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .u-section-3 .u-text-4 {
     margin-top: 20px;
     margin-left: 0;
   }
 
-  .u-section-3 .u-text-4 {
+  .u-section-3 .u-text-5 {
     margin-right: 0;
     margin-left: 0;
+  }
+
+  .u-section-3 .u-text-6 {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -411,6 +443,10 @@
 
 .u-section-4 .u-form-group-3 {
   margin-left: 0;
+}
+
+.u-section-4 .u-input-3 {
+  box-shadow: 0px 2px 8px 0px rgba(128,128,128,1);
 }
 
 .u-section-4 .u-form-group-4 {

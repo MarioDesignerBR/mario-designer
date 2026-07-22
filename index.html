@@ -28,7 +28,211 @@
     <meta property="og:title" content="Mario Designer">
     <meta property="og:description" content="Mario Designer | Video Editor, Motion Designer &amp; Creative Designer">
     <meta property="og:type" content="website">
-  <meta name="referrer" content="origin"><meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <meta name="referrer" content="origin"><script>
+    window.recaptchaRenderedV2 = false;
+    window.recaptchaFallback = false;
+    window.recaptchaSiteKeyV2 = '6LdfeIwrAAAAAMnDkaIExdHsV0Nsj8y-CU9AyTjZ';
+
+    function gdprConfirmed() {
+        return true;
+    }
+
+    function dynamicLoadScript() {
+        var script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js?render=6LdyDWAtAAAAAF2Swvak4HntqKi650aUBhHpagze';
+        script.async = true;
+        script.onload = function () {
+            var event = new CustomEvent("recaptchaLoaded");
+            document.dispatchEvent(event);
+        };
+        document.body.appendChild(script);
+    }
+
+    function showRecaptchaError(error) {
+        error = error || '';
+        var formError = document.querySelector('.u-form-send-error');
+
+        if (formError) {
+            formError.innerText = 'Erro do Proprietário do Site: ' + error.replace(/:[\s\S]*/, '');
+            formError.style.display = 'block';
+        }
+
+        console.error('Error in grecaptcha: ', error);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var confirmButtons = document.querySelectorAll('.u-cookies-consent .u-button-confirm');
+        confirmButtons.forEach(function (button) {
+            button.onclick = dynamicLoadScript;
+        });
+    });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            if (!gdprConfirmed()) {
+                return;
+            }
+            dynamicLoadScript();
+        });
+    </script>
+
+    <script>
+        document.addEventListener("recaptchaLoaded", function() {
+            if (!gdprConfirmed()) {
+                return;
+            }
+
+            (function (grecaptcha, sitekey, actions) {
+                var recaptcha = {
+                    execute: function (action, submitFormCb) {
+                        if (typeof grecaptcha === 'undefined' || typeof grecaptcha.execute !== 'function') {
+                            showRecaptchaError('reCAPTCHA script failed to load.');
+                            return;
+                        }
+
+                        try {
+                            grecaptcha.execute(sitekey, {action: action}).then((token) => {
+                                if (!token) {
+                                    throw new Error('Empty token received from reCAPTCHA');
+                                }
+
+                                var forms = document.getElementsByTagName('form');
+
+                                for (var i = 0; i < forms.length; i++) {
+                                    var response = forms[i].querySelector('[name="recaptchaResponse"]');
+
+                                    if (!response) {
+                                        response = document.createElement('input');
+                                        response.setAttribute('type', 'hidden');
+                                        response.setAttribute('name', 'recaptchaResponse');
+                                        forms[i].appendChild(response);
+                                    }
+
+                                    response.value = token;
+                                }
+
+                                submitFormCb();
+                            }).catch((e) => {
+                                showRecaptchaError(e.message);
+                            });
+                        } catch (e) {
+                            showRecaptchaError(e.message);
+                        }
+                    },
+
+                    executeContact: function (submitFormCb) {
+                        recaptcha.execute(actions['contact'], submitFormCb);
+                    }
+                };
+
+                window.recaptchaObject = recaptcha;
+                window.grecaptchaObject = grecaptcha;
+            })(
+                grecaptcha,
+                
+                '6LdyDWAtAAAAAF2Swvak4HntqKi650aUBhHpagze',
+                {'contact': 'contact'}
+            );
+        });
+    </script>
+
+    <script>
+    window.showRecaptchaV2 = function (form) {
+        if (!form || !form.length) {
+            return;
+        }
+        if (typeof window.grecaptchaObject === 'undefined' || !window.grecaptchaObject) {
+            return;
+        }
+
+        const formEl = form[0];
+
+        let container = document.getElementById('recaptcha-v2-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'recaptcha-v2-container';
+            formEl.parentElement.appendChild(container);
+        }
+
+        let tokenReceived = false;
+        let timeoutHandle;
+
+        if (window.recaptchaRenderedV2 === false || typeof window.recaptchaRenderedV2 === 'undefined') {
+            window.recaptchaRenderedV2 = window.grecaptchaObject.render('recaptcha-v2-container', {
+                'sitekey': window.recaptchaSiteKeyV2,
+                'size': 'invisible',
+                'callback': function (token) {
+                    clearTimeout(timeoutHandle);
+
+                    if (!token) {
+                        showRecaptchaError('reCAPTCHA v2 token was empty. Please try again.');
+                        return;
+                    }
+
+                    tokenReceived = true;
+
+                    let recaptchaResponseV2 = formEl.querySelector('input[name="recaptchaResponseV2"]');
+
+                    if (!recaptchaResponseV2) {
+                        recaptchaResponseV2 = document.createElement('input');
+                        recaptchaResponseV2.type = 'hidden';
+                        recaptchaResponseV2.name = 'recaptchaResponseV2';
+                        formEl.appendChild(recaptchaResponseV2);
+                    }
+
+                    recaptchaResponseV2.value = token;
+
+                    if (window.recaptchaSiteKeyV2) {
+                        let siteKeyInput = formEl.querySelector('input[name="siteKey"]');
+
+                        if (siteKeyInput) {
+                            siteKeyInput.value = window.recaptchaSiteKeyV2;
+                        }
+                    }
+
+                    document.querySelectorAll('.u-form-send-error').forEach(el => {
+                        el.style.display = 'none';
+                    });
+
+                    const event = new CustomEvent('submit', {
+                        detail: { recaptchaPassed: true },
+                        bubbles: true,
+                        cancelable: true,
+                    });
+
+                    formEl.dispatchEvent(event);
+                },
+                'error-callback': function () {
+                    clearTimeout(timeoutHandle);
+                    showRecaptchaError('reCAPTCHA v2 error. Please try again.');
+                },
+                'expired-callback': function () {
+                    clearTimeout(timeoutHandle);
+                }
+            });
+
+            window.grecaptchaObject.reset(window.recaptchaRenderedV2);
+
+            setTimeout(() => {
+                window.grecaptchaObject.execute(window.recaptchaRenderedV2);
+            }, 300);
+
+            timeoutHandle = setTimeout(function () {
+                if (!tokenReceived) {
+                    showRecaptchaError('The Contact Form could not be submitted because Google reCAPTCHA v3 detected unusual activity from your connection. Please try again later, or complete the reCAPTCHA v2 challenge if it appears.');
+                }
+            }, 120000);
+        } else {
+            window.grecaptchaObject.reset(window.recaptchaRenderedV2);
+
+            setTimeout(() => {
+                window.grecaptchaObject.execute(window.recaptchaRenderedV2);
+            }, 300);
+        }
+    };
+    </script>
+<meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
   <body data-home-page="Mario-Designer.html" data-home-page-title="Mario Designer" data-path-to-root="./" data-include-products="false" class="u-black u-body u-clearfix u-xl-mode" data-lang="ena"><header class="u-clearfix u-header u-sticky u-white u-header" id="sec-18df" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction=""><div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-sm u-sheet-1">
         <a href="#" class="u-image u-logo u-image-1" data-image-width="317" data-image-height="317">
           <img src="images/MDtransparente.png" class="u-logo-image u-logo-image-1">
@@ -122,19 +326,24 @@
       <div class="u-clearfix u-sheet u-valign-middle-md u-sheet-1">
         <div class="u-expanded-width-md u-expanded-width-sm u-expanded-width-xs u-list u-list-1">
           <div class="u-repeater u-repeater-1">
-            <div class="u-align-left u-container-align-left u-container-style u-list-item u-repeater-item u-list-item-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750">
-              <div class="u-container-layout u-similar-container u-valign-bottom-xl u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-1"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-1"><img src="images/3179068-806eabbb.png" alt=""></span>
+            <div class="u-align-left u-container-style u-list-item u-repeater-item u-list-item-1" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750">
+              <div class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-1"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-1"><img src="images/3179068-806eabbb.png" alt=""></span>
                 <h6 class="u-custom-font u-font-montserrat u-text u-text-1">Office Location</h6>
-                <p class="u-text u-text-2"> Natal, Rio Grande do Norte, BRA.<br>
-                  <br>
+                <p class="u-text u-text-2"> Natal, Rio Grande do Norte.<br>
                 </p>
+                <h5 class="u-text u-text-3">Brasil</h5>
               </div>
             </div>
             <div class="u-align-left u-container-align-left u-container-style u-list-item u-repeater-item u-list-item-2" data-animation-name="customAnimationIn" data-animation-duration="1500" data-animation-delay="750">
-              <div class="u-container-layout u-similar-container u-valign-bottom-xl u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-2"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-2"><img src="images/ce131fa2-9b26-4c33-a9f7-aff3357242a7-680a1986.png" alt=""></span>
-                <h6 class="u-custom-font u-font-montserrat u-text u-text-3">CONTACT</h6>
-                <p class="u-text u-text-4">+55 84 99949 3233<br>mariodesigner@live.com
+              <div class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-2"><span class="u-file-icon u-icon u-text-palette-1-base u-icon-2"><img src="images/ce131fa2-9b26-4c33-a9f7-aff3357242a7-680a1986.png" alt=""></span>
+                <h6 class="u-custom-font u-font-montserrat u-text u-text-4">CONTACT</h6>
+                <p class="u-text u-text-5">
+                  <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-1" href="mailto:mariodesigner@live.com">mariodesigner@live.com</a>
+                  <br>
                 </p>
+                <h5 class="u-text u-text-6">
+                  <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-2" href="tel:+5584999493233">Phone</a>
+                </h5>
               </div>
             </div>
           </div>
@@ -150,23 +359,23 @@
               <form action="https://service.nicepagesrv.com/form/v4/form-process" class="u-clearfix u-form-spacing-28 u-form-vertical u-inner-form" source="email" name="form" style="padding: 0px;">
                 <div class="u-form-email u-form-group u-form-partition-factor-2">
                   <label for="email-c6a3" class="u-label">Email</label>
-                  <input type="email" placeholder="Enter a valid email address" id="email-c6a3" name="email" class="u-input u-input-rectangle u-radius-6" required="">
+                  <input type="email" placeholder="Enter a valid email address" id="email-c6a3" name="email" class="u-input u-input-rectangle u-radius-6 u-text-body-color" required="">
                 </div>
                 <div class="u-form-group u-form-name u-form-partition-factor-2">
                   <label for="name-c6a3" class="u-label">Name</label>
-                  <input type="text" placeholder="Enter your Name" id="name-c6a3" name="name" class="u-input u-input-rectangle u-radius-6" required="">
+                  <input type="text" placeholder="Enter your Name" id="name-c6a3" name="name" class="u-input u-input-rectangle u-radius-6 u-text-body-color" required="">
                 </div>
                 <div class="u-form-group u-form-partition-factor-2 u-form-phone u-form-group-3">
                   <label for="phone-84d9" class="u-label">Phone</label>
-                  <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your phone (e.g. +14155552675)" id="phone-84d9" name="phone" class="u-input u-input-rectangle u-radius-6" required="">
+                  <input type="tel" pattern="\+?\d{0,3}[\s\(\-]?([0-9]{2,3})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})" placeholder="Enter your phone (e.g. +14155552675)" id="phone-84d9" name="phone" class="u-input u-input-rectangle u-radius-6 u-text-body-color u-input-3">
                 </div>
                 <div class="u-form-address u-form-group u-form-partition-factor-2 u-form-group-4">
-                  <label for="address-be2d" class="u-label">Address</label>
-                  <input type="text" placeholder="Enter your address" id="address-be2d" name="address" class="u-input u-input-rectangle u-radius-6" required="">
+                  <label for="address-be2d" class="u-label">Country</label>
+                  <input type="text" placeholder="Enter your address" id="address-be2d" name="Country" class="u-input u-input-rectangle u-radius-6 u-text-body-color">
                 </div>
                 <div class="u-form-group u-form-message">
                   <label for="message-c6a3" class="u-label">Message</label>
-                  <textarea placeholder="Enter your message" rows="4" cols="50" id="message-c6a3" name="message" class="u-input u-input-rectangle u-radius-6" required=""></textarea>
+                  <textarea placeholder="Enter your message" rows="4" cols="50" id="message-c6a3" name="message" class="u-input u-input-rectangle u-radius-6 u-text-body-color" required=""></textarea>
                 </div>
                 <div class="u-align-center u-form-group u-form-submit">
                   <a href="#" class="u-border-none u-btn u-btn-submit u-button-style u-palette-4-base u-btn-1">Enviar</a>
@@ -176,6 +385,7 @@
                 <div class="u-form-send-error u-form-send-message">Your message could not be sent. Please correct the errors and try again.</div>
                 <input type="hidden" value="" name="recaptchaResponse">
                 <input type="hidden" name="formServices" value="3b58b4ac-d663-f980-382f-f3d732613371">
+                <input type="hidden" name="siteKey" value="6LdyDWAtAAAAAF2Swvak4HntqKi650aUBhHpagze">
               </form>
             </div>
           </div>
